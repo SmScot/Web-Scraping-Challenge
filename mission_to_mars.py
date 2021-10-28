@@ -12,11 +12,9 @@ import pymongo
 from splinter import Browser
 from webdriver_manager.chrome import ChromeDriverManager
 
-
-
 def scrape_info():
 
-# In[4]:
+# In[2]:
 
 
     url = "https://mars.nasa.gov/news/?page=0&per_page=40&order=publish_date+desc%2Ccreated_at+desc&search=&category=19%2C165%2C184%2C204&blank_scope=Latest"
@@ -27,13 +25,13 @@ def scrape_info():
     soup = BeautifulSoup(response.text, 'lxml')
 
 
-# In[5]:
+# In[3]:
 
 
     soup
 
 
-# In[6]:
+# In[4]:
 
 
 # print article title
@@ -41,7 +39,7 @@ def scrape_info():
     print(news_title)
 
 
-# In[7]:
+# In[5]:
 
 
 # print article preview
@@ -49,7 +47,7 @@ def scrape_info():
     print(news_p)
 
 
-# In[8]:
+# In[6]:
 
 
 # Setup splinter
@@ -57,14 +55,14 @@ def scrape_info():
     browser = Browser('chrome', **executable_path, headless=False)
 
 
-# In[9]:
+# In[7]:
 
 
     url = 'https://spaceimages-mars.com/'
     browser.visit(url)
 
 
-# In[10]:
+# In[8]:
 
 
     html = browser.html
@@ -73,20 +71,20 @@ def scrape_info():
     results = soup.find('a', class_='showimg fancybox-thumbs')['href']
 
 
-# In[11]:
+# In[9]:
 
 
     featured_image_url = url + results
     print(featured_image_url)
 
 
-# In[12]:
+# In[10]:
 
 
     url = 'https://galaxyfacts-mars.com/'
 
 
-# In[13]:
+# In[11]:
 
 
 # Use Panda's `read_html` to parse the url
@@ -94,7 +92,7 @@ def scrape_info():
     tables
 
 
-# In[14]:
+# In[12]:
 
 
 # Create dataframe
@@ -104,17 +102,21 @@ def scrape_info():
     comparisons_df
 
 
+    # In[13]:
+
+
     mars_facts = comparisons_df.to_html(classes=["table-bordered", "table-striped", "table-hover"])
     print(mars_facts)
 
-# In[15]:
+
+    # In[14]:
 
 
     url = 'https://marshemispheres.com/'
     browser.visit(url)
 
 
-# In[16]:
+    # In[15]:
 
 
     html = browser.html
@@ -126,15 +128,15 @@ def scrape_info():
     soup = BeautifulSoup(browser.html, 'html.parser')
 
 
-# In[17]:
+    # In[16]:
 
 
     results = soup.find_all("a")
 
     for result in results:
         if result.text.strip() == "Sample":
-            image_url = url + result["href"]
-        
+            image_url = result["href"]
+            
     title = soup.find("h2", class_="title").text
 
     x = {"title": title,
@@ -143,14 +145,14 @@ def scrape_info():
     print(hemisphere_image_urls)
 
 
-# In[18]:
+    # In[17]:
 
 
     url = 'https://marshemispheres.com/'
     browser.visit(url)
 
 
-# In[19]:
+    # In[18]:
 
 
     browser.links.find_by_partial_text('Schiaparelli').click()
@@ -159,15 +161,15 @@ def scrape_info():
     soup = BeautifulSoup(html, "html.parser")
 
 
-# In[20]:
+    # In[19]:
 
 
     results = soup.find_all("a")
 
     for result in results:
         if result.text.strip() == "Sample":
-            image_url = url + result["href"]
-        
+            image_url = result["href"]
+            
     title = soup.find("h2", class_="title").text
 
     x = {"title": title,
@@ -176,14 +178,14 @@ def scrape_info():
     print(hemisphere_image_urls)
 
 
-# In[21]:
+    # In[20]:
 
 
     url = 'https://marshemispheres.com/'
     browser.visit(url)
 
 
-# In[22]:
+    # In[21]:
 
 
     browser.links.find_by_partial_text('Syrtis Major').click()
@@ -192,15 +194,15 @@ def scrape_info():
     soup = BeautifulSoup(html, "html.parser")
 
 
-# In[23]:
+    # In[22]:
 
 
     results = soup.find_all("a")
 
     for result in results:
         if result.text.strip() == "Sample":
-            image_url = url + result["href"]
-        
+            image_url = result["href"]
+            
     title = soup.find("h2", class_="title").text
 
     x = {"title": title,
@@ -209,14 +211,14 @@ def scrape_info():
     print(hemisphere_image_urls)
 
 
-# In[24]:
+    # In[23]:
 
 
     url = 'https://marshemispheres.com/'
     browser.visit(url)
 
 
-# In[25]:
+    # In[24]:
 
 
     browser.links.find_by_partial_text('Valles Marineris').click()
@@ -225,15 +227,15 @@ def scrape_info():
     soup = BeautifulSoup(html, "html.parser")
 
 
-# In[26]:
+    # In[25]:
 
 
     results = soup.find_all("a")
 
     for result in results:
         if result.text.strip() == "Sample":
-            image_url = url + result["href"]
-        
+            image_url = result["href"]
+            
     title = soup.find("h2", class_="title").text
 
     x = {"title": title,
@@ -242,7 +244,7 @@ def scrape_info():
     print(hemisphere_image_urls)
 
 
-# In[27]:
+    # In[26]:
 
 
     browser.quit()
@@ -258,8 +260,3 @@ def scrape_info():
 
 if __name__ == "__main__":
     scrape_info()
-
-
-
-
-
